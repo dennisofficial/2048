@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.croniks.j2048.room.RoomGame;
-import org.croniks.j2048.room.RoomLeaderboard;
-import org.croniks.j2048.room.RoomLoadup;
-import org.croniks.j2048.room.RoomMainMenu;
-import org.croniks.j2048.room.RoomPause;
 import org.croniks.j2048.types.JavaRoom;
 
 public class JavaRoomManager {
@@ -26,11 +22,7 @@ public class JavaRoomManager {
 	
 	public JavaRoomManager() {
 		currentRoom = ROOM_GAME;
-		rooms.add(new RoomLoadup());
-		rooms.add(new RoomMainMenu());
-		rooms.add(new RoomPause());
 		rooms.add(new RoomGame());
-		rooms.add(new RoomLeaderboard());
 	}
 	
 	public void setCurrentRoom(Integer currentRoom) {

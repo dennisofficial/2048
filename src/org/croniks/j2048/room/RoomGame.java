@@ -20,7 +20,7 @@ import org.croniks.j2048.object.ObjectTileController;
 import org.croniks.j2048.types.JavaFile;
 import org.croniks.j2048.types.JavaRoom;
 
-public class RoomGame extends JavaRoom {
+public class RoomGame implements JavaRoom {
 
 	private JavaObjectManager jom = new JavaObjectManager();
 	private static Integer score = 0;
