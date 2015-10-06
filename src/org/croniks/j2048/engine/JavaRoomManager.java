@@ -12,11 +12,7 @@ public class JavaRoomManager {
 
 	public static List<JavaRoom> rooms = new ArrayList<JavaRoom>();
 
-	public final Integer ROOM_LOADUP = 0;
-	public final Integer ROOM_MAIN_MENU = 1;
-	public final Integer ROOM_PAUSE = 2;
-	public final Integer ROOM_GAME = 3;
-	public final Integer ROOM_LEADERBOARD = 4;
+	public final Integer ROOM_GAME = 0;
 	
 	private Integer currentRoom;
 	
