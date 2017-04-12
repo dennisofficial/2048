@@ -27,7 +27,7 @@ public class ObjectTileController extends JavaObject {
 	}
 
 	public ObjectTile setTile(Integer x, Integer y, Integer label, Boolean expand) {
-		ObjectTile tile = new ObjectTile(x, y, ObjectTile.getPositions().get(label), expand);
+		ObjectTile tile = new ObjectTile(x, y, label, expand);
 		tiles.get(x).set(y, tile);
 		return tile;
 	}
@@ -97,7 +97,7 @@ public class ObjectTileController extends JavaObject {
 					}
 					if (morph) {
 						ObjectTile tile = setTile(x - count, y, getTile(x, y).LABEL + 1, true);
-						RoomGame.addScore(ObjectTile.getPositions().get(getTile(x, y).LABEL) * 2);
+						RoomGame.addScore((int) Math.pow(2, getTile(x, y).LABEL + 1));
 						tile.setMorph(count, 3);
 						clearTile(x, y);
 					}
@@ -133,7 +133,7 @@ public class ObjectTileController extends JavaObject {
 					}
 					if (morph) {
 						ObjectTile tile = setTile(x + count, y, getTile(x, y).LABEL + 1, true);
-						RoomGame.addScore(ObjectTile.getPositions().get(getTile(x, y).LABEL) * 2);
+						RoomGame.addScore((int) Math.pow(2, getTile(x, y).LABEL + 1));
 						tile.setMorph(count, 1);
 						clearTile(x, y);
 					}
@@ -169,7 +169,7 @@ public class ObjectTileController extends JavaObject {
 					}
 					if (morph) {
 						ObjectTile tile = setTile(x, y - count, getTile(x, y).LABEL + 1, true);
-						RoomGame.addScore(ObjectTile.getPositions().get(getTile(x, y).LABEL) * 2);
+						RoomGame.addScore((int) Math.pow(2, getTile(x, y).LABEL + 1));
 						tile.setMorph(count, 0);
 						clearTile(x, y);
 					}
@@ -205,7 +205,7 @@ public class ObjectTileController extends JavaObject {
 					}
 					if (morph) {
 						ObjectTile tile = setTile(x, y + count, getTile(x, y).LABEL + 1, true);
-						RoomGame.addScore(ObjectTile.getPositions().get(getTile(x, y).LABEL) * 2);
+						RoomGame.addScore((int) Math.pow(2, getTile(x, y).LABEL + 1));
 						tile.setMorph(count, 2);
 						clearTile(x, y);
 					}

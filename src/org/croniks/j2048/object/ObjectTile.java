@@ -21,9 +21,9 @@ public class ObjectTile extends JavaObject {
 	private Integer DX = 0;
 	private Integer DY = 0;
 	private Double SCALE = 1.0;
-	private static List<Integer> positions = new ArrayList<Integer>();
+	private static List<Color> colors = new ArrayList<Color>();
 
-	//Animation Properties
+	// Animation Properties
 	private Integer time = 0;
 	private Integer timeEnd = JavaPanel.FPS / 8;
 	private Integer direction;
@@ -37,11 +37,6 @@ public class ObjectTile extends JavaObject {
 		Y = y;
 		OX = x;
 		OY = y;
-		for (int i = 0; i < positions.size(); i++) {
-			if (label == positions.get(i)) {
-				label = i;
-			}
-		}
 		LABEL = label;
 		this.expand = expand;
 	}
@@ -54,14 +49,11 @@ public class ObjectTile extends JavaObject {
 		DY = 0;
 		if (direction == 0) {
 			Y += count;
-		}
-		else if (direction == 1) {
+		} else if (direction == 1) {
 			X -= count;
-		}
-		else if (direction == 2) {
+		} else if (direction == 2) {
 			Y -= count;
-		}
-		else if (direction == 3) {
+		} else if (direction == 3) {
 			X += count;
 		}
 	}
@@ -70,41 +62,38 @@ public class ObjectTile extends JavaObject {
 		move = true;
 		this.direction = direction;
 		this.count = count;
-		if (direction == 0) {
+		switch (direction) {
+		case 0:
 			Y += count;
-		}
-		else if (direction == 1) {
+			break;
+		case 1:
 			X -= count;
-		}
-		else if (direction == 2) {
+			break;
+		case 2:
 			Y -= count;
-		}
-		else if (direction == 3) {
+			break;
+		case 3:
 			X += count;
+			break;
+		default:
+			break;
 		}
 	}
-	
+
 	public Boolean isMorph() {
 		return morph;
 	}
-	
-	public static List<Integer> getPositions() {
-		return positions;
-	}
-	
-	public static void settupPos() {
-		positions.add(0);
-		positions.add(2);
-		positions.add(4);
-		positions.add(8);
-		positions.add(16);
-		positions.add(32);
-		positions.add(64);
-		positions.add(128);
-		positions.add(256);
-		positions.add(512);
-		positions.add(1024);
-		positions.add(2048);
+
+	public static void setupColors() {
+		colors.add(new Color(238, 228, 218));
+		colors.add(new Color(237, 224, 200));
+		colors.add(new Color(242, 177, 121));
+		colors.add(new Color(245, 149, 99));
+		colors.add(new Color(246, 124, 95));
+		colors.add(new Color(246, 94, 59));
+		colors.add(new Color(237, 207, 114));
+		colors.add(new Color(237, 204, 97));
+		colors.add(new Color(237, 200, 80));
 	}
 
 	@Override
@@ -117,37 +106,30 @@ public class ObjectTile extends JavaObject {
 			if (time < timeEnd) {
 				time++;
 				if (direction == 0) {
-					if (DY > -(121 * count) + ((121 * count)/timeEnd)) {
-						DY -= (121 * count)/timeEnd;
+					if (DY > -(121 * count) + ((121 * count) / timeEnd)) {
+						DY -= (121 * count) / timeEnd;
+					}
+				} else if (direction == 1) {
+					if (DX < (121 * count) - ((121 * count) / timeEnd)) {
+						DX += (121 * count) / timeEnd;
+					}
+				} else if (direction == 2) {
+					if (DY < (121 * count) - ((121 * count) / timeEnd)) {
+						DY += (121 * count) / timeEnd;
+					}
+				} else if (direction == 3) {
+					if (DX > -(121 * count) + ((121 * count) / timeEnd)) {
+						DX -= (121 * count) / timeEnd;
 					}
 				}
-				else if (direction == 1) {
-					if (DX < (121 * count) - ((121 * count)/timeEnd)) {
-						DX += (121 * count)/timeEnd;
-					}
-				}
-				else if (direction == 2) {
-					if (DY < (121 * count) - ((121 * count)/timeEnd)) {
-						DY += (121 * count)/timeEnd;
-					}
-				}
-				else if (direction == 3) {
-					if (DX > -(121 * count) + ((121 * count)/timeEnd)) {
-						DX -= (121 * count)/timeEnd;
-					}
-				}
-			}
-			else {
+			} else {
 				if (direction == 0) {
 					DY = -(121 * count);
-				}
-				else if (direction == 1) {
+				} else if (direction == 1) {
 					DX = +(121 * count);
-				}
-				else if (direction == 2) {
+				} else if (direction == 2) {
 					DY = +(121 * count);
-				}
-				else if (direction == 3) {
+				} else if (direction == 3) {
 					DX = -(121 * count);
 				}
 				if (morph) {
@@ -160,14 +142,12 @@ public class ObjectTile extends JavaObject {
 		if (expand) {
 			if (time < timeEnd) {
 				time++;
-				if (time < timeEnd/2) {
+				if (time < timeEnd / 2) {
 					SCALE += 0.05;
-				}
-				else {
+				} else {
 					SCALE -= 0.05;
 				}
-			}
-			else {
+			} else {
 				time = 0;
 				expand = false;
 				SCALE = 1.0;
@@ -178,58 +158,50 @@ public class ObjectTile extends JavaObject {
 	@Override
 	public void draw(Graphics2D g) {
 		Integer fontSize = null;
-		if (positions.get(LABEL) == 2) { fontSize = 53; }
-		if (positions.get(LABEL) == 4) { fontSize = 53; }
-		if (positions.get(LABEL) == 8) { fontSize = 53; }
-		if (positions.get(LABEL) == 16) { fontSize = 53; }
-		if (positions.get(LABEL) == 32) { fontSize = 53; }
-		if (positions.get(LABEL) == 64) { fontSize = 53; }
-		if (positions.get(LABEL) == 128) { fontSize = 43; }
-		if (positions.get(LABEL) == 256) { fontSize = 43; }
-		if (positions.get(LABEL) == 512) { fontSize = 43; }
-		if (positions.get(LABEL) == 1024) { fontSize = 33; }
-		if (positions.get(LABEL) == 2048) { fontSize = 33; }
+		if (LABEL > 0) {
+			fontSize = 53;
+		}
+		if (LABEL >= 7) {
+			fontSize = 43;
+		}
+		if (LABEL >= 10) {
+			fontSize = 33;
+		}
 		g.setFont(new Font("Clear Sans", Font.BOLD, fontSize));
 		FontMetrics fontMetrics = g.getFontMetrics(new Font("Clear Sans", Font.BOLD, fontSize));
-		Integer label = null;
+		Integer label = LABEL;
 		if (morph) {
-			label = positions.get(LABEL - 1);
+			label = LABEL - 1;
 		}
-		else {
-			label = positions.get(LABEL);
+		try {
+			g.setColor(colors.get(label - 1));
+		} catch (IndexOutOfBoundsException ex) {
+			g.setColor(new Color(237, 200, 80));
 		}
-		if (label == 2) { g.setColor(new Color(238,228,218)); }
-		if (label == 4) { g.setColor(new Color(237,224,200)); }
-		if (label == 8) { g.setColor(new Color(242,177,121)); }
-		if (label == 16) { g.setColor(new Color(245,149,99)); }
-		if (label == 32) { g.setColor(new Color(246,124,95)); }
-		if (label == 64) { g.setColor(new Color(246,94,59)); }
-		if (label == 128) { g.setColor(new Color(237,207,114)); }
-		if (label == 256) { g.setColor(new Color(237,204,97)); }
-		if (label == 512) { g.setColor(new Color(237,200,80)); }
-		if (label == 1024) { g.setColor(new Color(237,200,80)); }
-		if (label == 2048) { g.setColor(new Color(237,200,80)); }
 		if (morph) {
-			g.fillRoundRect(30 + (121 * OX) - (int) (((106 * SCALE) - 106) / 2), 130 + (121 * OY) - (int) (((106 * SCALE) - 106) / 2), (int) (106 * SCALE), (int) (106 * SCALE), 6, 6);
+			g.fillRoundRect(30 + (121 * OX) - (int) (((106 * SCALE) - 106) / 2),
+					130 + (121 * OY) - (int) (((106 * SCALE) - 106) / 2), (int) (106 * SCALE), (int) (106 * SCALE), 6,
+					6);
 		}
-		g.fillRoundRect(30 + (121 * X) - (int) (((106 * SCALE) - 106) / 2) + DX, 130 + (121 * Y) - (int) (((106 * SCALE) - 106) / 2) + DY, (int) (106 * SCALE), (int) (106 * SCALE), 6, 6);
-		if (label < 5) {
-			g.setColor(new Color(119,110,101));
-		}
-		else {
+		g.fillRoundRect(30 + (121 * X) - (int) (((106 * SCALE) - 106) / 2) + DX,
+				130 + (121 * Y) - (int) (((106 * SCALE) - 106) / 2) + DY, (int) (106 * SCALE), (int) (106 * SCALE), 6,
+				6);
+		if (label < 3) {
+			g.setColor(new Color(119, 110, 101));
+		} else {
 			g.setColor(new Color(255, 255, 255));
 		}
 		Integer offset = 0;
 		if (fontSize == 43) {
 			offset = 4;
-		}
-		else if (fontSize == 33) {
+		} else if (fontSize == 33) {
 			offset = 7;
 		}
+		String str = "" + (int) Math.pow(2, label);
 		if (morph) {
-			g.drawString(label.toString(), 82 + (121 * OX) - (fontMetrics.stringWidth(label.toString().trim())/2), 202 + (121 * OY) - offset);
+			g.drawString(str, 82 + (121 * OX) - (fontMetrics.stringWidth(str) / 2), 202 + (121 * OY) - offset);
 		}
-		g.drawString(label.toString(), 82 + (121 * X) - (fontMetrics.stringWidth(label.toString().trim())/2) + DX, 202 + (121 * Y) + DY - offset);
+		g.drawString(str, 82 + (121 * X) - (fontMetrics.stringWidth(str) / 2) + DX, 202 + (121 * Y) + DY - offset);
 	}
 
 	@Override

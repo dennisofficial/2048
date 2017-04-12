@@ -43,7 +43,7 @@ public class RoomGame implements JavaRoom {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ObjectTile.settupPos();
+		ObjectTile.setupColors();
 	}
 
 	public static void addScore(Integer score) {
